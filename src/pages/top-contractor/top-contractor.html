@@ -1,0 +1,41 @@
+<!--
+  Generated template for the TopContractorPage page.
+  
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{'Top 20 Contractor' | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Refreshing..." refreshingSpinner="circles" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  
+  
+  <div class="main-history mb70">
+    <div class="cs-list" *ngFor="let row of data" (click)="goToDetail(row.id , row);">
+      <div class="top-block">
+        <p>{{row.first_name ? row.first_name:'N/A'}}</p>
+        <div class="number-block">
+          <span>{{row.mobile_no}}</span>
+          <a class="dialer" href="tel:{{row.mobile_no}}"><ion-icon ios="ios-call" md="md-call"></ion-icon></a>
+        </div>
+      </div>
+      <div class="middle-block">
+        <p><strong>{{'Address' | translate}} </strong> {{row.state}}</p>
+      </div>
+      <div class="top-block footer-block">
+        <p><span>{{'Total Wallet Balance' | translate}}: </span> <strong>{{row.balance_point}}</strong></p>
+      </div>
+    </div>
+    
+    <div class="no-content" *ngIf="data.length == 0">
+      <img src="assets/imgs/no_found.svg" >
+    </div>
+  </div>
+</ion-content>

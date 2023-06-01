@@ -1,0 +1,151 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{'Transaction Detail' | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <!-- <div class="shipped-detail" >
+        <div class="content edit-content" *ngIf="karigar_gift.shipping_address" >
+            <p>Shipping Address</p>
+            <a *ngIf="!shipped_detail.shipped_type && edit=='' && karigar_gift.gift_status=='Pending'" class="edit-field" (click)="edit='1'"><i class="material-icons">create</i></a>
+            <h1 *ngIf="edit==''">{{karigar_gift.shipping_address}}</h1> 
+            
+            <div *ngIf="edit=='1'">
+                <textarea palceholder="Shipping Address" name="shipping_address " #shipping_address ="ngModel" [(ngModel)]="karigar_gift.shipping_address" ></textarea>
+                <button ion-item class="cs-btn btn-radius mb0 mt10" [disabled]="karigar_gift.shipping_address==''" (click)="editAddress()">Save</button>
+            </div>
+        </div>
+        <div *ngIf="shipped_detail.shipped_type">
+            <div class="content">
+                <p>Shipped By</p>
+                <h1>{{shipped_detail.shipped_type}}</h1> 
+            </div>
+            <div class="content" >
+                <p>Estimate Delivery Time</p>
+                <h1>{{shipped_detail.estimated_date}}</h1>
+            </div>
+            <div class="content">
+                <p>Shipping Information</p>
+                <h1 [innerHTML]="shipped_detail.shipping_information" (click)="goto_link(shipped_detail.shipping_information)" ></h1>
+            </div>
+        </div>
+    </div> -->
+    <div class="margin-padding" *ngIf="userType == 1">
+        <div class="phone">
+            <div class="phone-head">
+                <h1>{{gift_detail.gift_title}}</h1>
+            </div>
+            <div class="phone-img">
+                <!-- <img [src]="upload_url+gift_detail.gift_image"> -->
+                <img src="{{upload_url + gift_detail.gift_image}}">
+            </div>
+        </div>
+        <div class="lorem-text" *ngIf="gift_detail.gift_specification != ''">
+            <p><Strong>Specification : <div [innerHTML]="gift_detail.gift_specification"> </div></Strong></p>
+        </div>
+    </div>
+    
+    
+    <div class="heading line mt18 mb16">
+        <p>{{'Redeem Request Information' | translate}}</p>
+    </div>
+    <div class="adhar">
+        <table>
+            <tr>
+                <th>{{'Date' | translate}}</th>
+                <td>{{transactionData.date_created | date: 'dd MMM yyyy'}}</td>
+            </tr>
+            <tr>
+                <th>{{'Points' | translate}}</th>
+                <td>{{transactionData.gift_points ? transactionData.gift_points:'N/A'}}</td>
+            </tr>
+            <tr>
+                <th>{{'Req. ID' | translate}}</th>
+                <td>{{transactionData.redeem_code ? transactionData.redeem_code:'N/A'}}</td>
+            </tr>
+            <tr>
+                <th>{{'Redeem Amount' | translate}}</th>
+                <td>&#x20B9; {{transactionData.payment_amount ? transactionData.payment_amount:'N/A'}}</td>
+            </tr>
+            <tr>
+                <th>{{'Status' | translate}}</th>
+                <td>
+                    <strong class="{{transactionData.gift_status}}">{{transactionData.gift_status ? transactionData.gift_status:'N/A'}}</strong>
+                </td>
+            </tr>
+            <tr *ngIf="transactionData.reject_reason != ''">
+                <th>{{'Reject Reason' | translate}}</th>
+                <td>{{transactionData.reject_reason ? transactionData.reject_reason:'N/A'}}</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="heading line mt18 mb16">
+        <p>{{'Bank Information' | translate}}</p>
+    </div>
+    <div class="adhar">
+        <table>
+            <tr>
+                <th>{{'Bank Name' | translate}}</th>
+                <td>{{transactionData.bank_name ? transactionData.bank_name:'N/A'}}</td>
+            </tr>
+            <tr>
+                <th>{{'Bank Account Number' | translate}}</th>
+                <td>{{transactionData.bank_account_number ? transactionData.bank_account_number:'N/A'}}</td>
+            </tr>
+            <tr>
+                <th>{{'Bank IFSC Code' | translate}}</th>
+                <td>{{transactionData.bank_ifsc_code ? transactionData.bank_ifsc_code:'N/A'}}</td>
+            </tr>
+            <tr>
+                <th>{{'Bank Branch Address' | translate}}</th>
+                <td>{{transactionData.bank_branch_address ? transactionData.bank_branch_address:'N/A'}}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="heading line mt18 mb16">
+        <p>{{'Transaction Information' | translate}}</p>
+    </div>
+    <div class="adhar">
+        <table>
+            <tr>
+                <th>{{'Transfer Date' | translate}}</th>
+                <td>
+                    <ng-container *ngIf="transactionData.status_code == '000'">
+                        {{transactionData.trans_date | date: 'dd MMM yyyy'}}
+                    </ng-container>
+                </td>
+            </tr>
+            <tr>
+                <th>{{'Transaction ID' | translate}}</th>
+                <td>{{transactionData.trans_id ? transactionData.trans_id:'N/A'}}</td>
+            </tr>
+            <tr>
+                <th>{{'Transfer Status' | translate}}</th>
+                <td>
+                    <strong class="{{transactionData.trans_status}}">{{transactionData.trans_status ? transactionData.trans_status:'N/A'}}</strong>
+                </td>
+            </tr>
+            <!-- <tr>
+                <th>{{'Transfer Amount' | translate}}</th>
+                <td>&#x20B9; {{transactionData.payment_amount ? transactionData.payment_amount:'N/A'}}</td>
+            </tr> -->
+            <tr *ngIf="transactionData.dr_desc != ''">
+                <th>{{'Payment Description' | translate}}</th>
+                <td>{{transactionData.dr_desc}}</td>
+            </tr>
+            <tr *ngIf="transactionData.trans_fail_reason != ''">
+                <th>{{'Failure Reason' | translate}}</th>
+                <td>{{transactionData.trans_fail_reason}}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="fix-btn" *ngIf="receive_status == null">
+        <button ion-item class="cs-btn btn-radius mb0" (click)="recvConfirmation(gift_detail.id)">{{'Click Here if you Recieve' | translate}}</button>
+    </div>
+</ion-content>
+
+
+
+<!-- {{gift_detail.gift_specification}} -->

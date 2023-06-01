@@ -1,0 +1,57 @@
+page-transaction {
+    .chatus{
+        text-align: left;
+        
+        button{
+            font-size: 12px;
+            text-transform: capitalize;
+            padding: 0px;
+            margin: 0px !important;
+            text-decoration: underline;
+            height: 20px;
+            color: #0459d8;
+        }
+    }
+    .tr-cicle,.tr-cicle1, .tr-cicle2{
+        border: 1px solid #fff!important;
+        background: #f6f6f6 !important;
+        border-radius: 6px !important;
+    }
+    .tr-cicle i{
+        color: #eb822c!important;
+    }
+    .tr-cicle1 i{
+        color: #ff0000!important;
+    }
+    .tr-cicle2 i{
+        color: #6AC259!important;
+    }
+    .yes_btn{
+        color: blue;
+        text-decoration: underline;
+    }
+    .btn-received{
+        p{
+            font-size: 12px;
+            font-weight: 500;
+        }
+    }
+    .green{
+        color: #6AC259;
+    }
+    
+    .redeem-point{
+        h2 {
+            font-size: 16px;
+            margin: 10px 0px 0px !important;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            
+            strong{
+                color: #d7ab52;
+                font-size: 22px;
+            }
+        }
+    }
+}

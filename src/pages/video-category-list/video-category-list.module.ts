@@ -1,0 +1,29 @@
+import { NgModule } from '@angular/core';
+import { IonicPageModule } from 'ionic-angular';
+import { VideoCategoryListPage } from './video-category-list';
+
+import { TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import { TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
+
+@NgModule({
+  declarations: [
+    VideoCategoryListPage,
+  ],
+  imports: [
+    IonicPageModule.forChild(VideoCategoryListPage),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient]
+      }
+    })
+  ],
+})
+export class VideoCategoryListPageModule {}

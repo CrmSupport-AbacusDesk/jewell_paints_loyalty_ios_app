@@ -1,0 +1,41 @@
+<ion-header>
+    <ion-navbar>
+        <!-- For hindi -->
+        <!-- {{lang != 'en' ? prod_cat.hin_category_name : prod_cat.category_name |titlecase}} -->
+        <ion-title>{{'Product Bonus' | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="{{'Pull to refresh' | translate}}" refreshingSpinner="circles" refreshingText="{{'Refreshing...'| translate}}">
+        </ion-refresher-content>
+    </ion-refresher>
+    
+    
+    <div class="pr-list" (click)="goOnProductSubDetailPage(list.id)" *ngFor="let list of schemeData;let i=index">
+        <button ion-item>
+            <div class="main-bx">
+                <div class="bx-right">
+                    <p>{{list.title}}</p>
+                    <span>Vaild Up To {{list.start_date | date:'d MMMM y'}} - {{list.end_date | date:'d MMMM y'}}</span>
+                </div>
+            </div>  
+            <i class="material-icons">keyboard_arrow_right</i>
+        </button>
+    </div>
+    
+    <div class="no-content" *ngIf="schemeData.length == 0">
+        <img src="assets/imgs/no_found.svg" >
+    </div>
+    
+    
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)"  *ngIf="flag!=1">
+        <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="{{'Loading more data...' | translate}}">
+    </ion-infinite-scroll-content>
+</ion-infinite-scroll>
+
+
+</ion-content>

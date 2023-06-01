@@ -1,0 +1,101 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{'My Points' | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="{{'Refreshing...' | translate}}" refreshingSpinner="circles" refreshingText="{{'Refreshing...' | translate}}">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="top-nav nav-adjust-2">
+    <p>{{'Balance Points' | translate}}</p>
+    <h1>{{total_balance_point}}</h1>
+    <h2> {{'Last updated' | translate}} {{ (karigar_point.balance_update!='0000-00-00') ? (karigar_point.balance_update | date:'d MMMM y') : ('00-00-0000') }}</h2>
+  </div>
+  <ion-segment [(ngModel)]="history">
+    
+    <ion-segment-button value="scanned">
+      {{ 'Scanned Points' | translate }}
+    </ion-segment-button>
+    
+    <ion-segment-button value="referral">
+      {{ 'Bonus Points' | translate }}
+    </ion-segment-button>
+  </ion-segment>
+  
+  <div [ngSwitch]="history">
+    
+    <ion-list  *ngSwitchCase="'scanned'">
+      <ng-container *ngIf="coupon_list.length == 0">
+        <div class="no-history">
+          <img src="assets/imgs/history.png">
+          <p>{{'No History' | translate}}</p>
+        </div>
+      </ng-container>
+      <!-- (click)="goOnPointDetailPage(list.id)" -->
+      <ion-item *ngFor="let list of coupon_list; let i=index" >
+        <div class="left-block">
+          <span><strong>{{'Coupon Code' | translate}} : </strong> {{list.coupon_code}} <br>({{list.scan_by_karigar_date | date:'d MMMM y, h:mm a'}})</span>
+          <span *ngIf="karigar_point.user_type == '2' ">
+            <ng-container *ngIf="karigar_point.painter_name || karigar_point.painter_mobile">
+              <strong>{{'Painter' | translate}} : </strong> {{list.painter_name}} ({{list.painter_mobile}})
+            </ng-container>
+          </span>
+
+          <span *ngIf="karigar_point.user_type == '3'">
+            <ng-container *ngIf="list.contractor_name =='' || list.contractor_mobile ==''">
+              <strong>{{'Painter' | translate}} : </strong> {{list.painter_name | titlecase}} ({{list.painter_mobile}})
+            </ng-container>
+            <ng-container *ngIf="list.contractor_name || list.contractor_mobile">
+              <strong>{{'Contractor' | translate}} : </strong> {{list.contractor_name | titlecase}} ({{list.contractor_mobile}})
+            </ng-container>
+          </span>
+          <span *ngIf="karigar_point.user_type == '1'">
+            <ng-container *ngIf="list.dealer_name =='' || list.dealer_mobile == ''">
+              <strong>{{'Painter' | translate}} : </strong> {{list.painter_name | titlecase}} ({{list.painter_mobile}})
+            </ng-container>
+          
+          </span>
+          
+          <span *ngIf="karigar_point.user_type == '2' "><strong>{{'Contractor' | translate}} : </strong> {{list.contractor_name}} ({{list.contractor_mobile}})</span>
+          <span *ngIf="karigar_point.user_type == '1' "><strong>{{'Scan By' | translate}} : </strong> {{list.dealer_name}}</span>
+          
+        </div>
+        <div class="right-block">
+          <h2  *ngIf="karigar_point.user_type == '1' ">{{list.contractor_coupon_value}} <span>PT</span></h2>
+          <h2 *ngIf="karigar_point.user_type == '2' ">{{list.karigar_coupon_value}} <span>PT</span></h2>
+          <h2 *ngIf="karigar_point.user_type == '3' ">{{list.painter_coupon_value}} <span>PT</span></h2>
+          
+        </div>
+      </ion-item>
+    </ion-list>
+    
+    <ion-list  *ngSwitchCase="'referral'">
+      
+      <!-- <ng-container *ngIf="ref_kar.length == 0">
+        <div class="no-history">
+          <img src="assets/imgs/history.png">
+          <p>{{'No History' | translate}}</p>
+        </div>
+      </ng-container> -->
+      <ion-item *ngFor="let row of ref_kar;">
+        <div class="left-block">
+          <p>{{row.summary}}</p>
+          <span>{{row.date_refered | date:'d MMMM y'}}</span>
+        </div>
+        <div class="right-block">
+          <h2>{{row.coupon_value}} <span>PT</span></h2>
+        </div>
+      </ion-item>
+    </ion-list>
+  </div>
+  
+  
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)" *ngIf="flag!=1">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="{{'Loading more data...' | translate}}">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

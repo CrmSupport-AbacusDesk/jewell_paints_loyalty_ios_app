@@ -1,0 +1,53 @@
+page-profile {
+
+	ion-header
+	{
+		ion-navbar
+		{
+
+		}
+
+		&:after
+		{
+			display: none !important;
+		}
+	}
+
+
+	.profile-list{
+		margin-top: 16px;
+
+		.list-icon {
+			display: flex;
+			align-items: flex-start;
+			grid-column-gap: 10px;
+			line-height: 20px;
+			font-size: 13px;
+			margin-bottom: 5px;
+			i{
+				font-size: 20px;
+			}
+		}
+	}
+
+
+	
+
+	.slab-hint{
+		display: flex;
+		align-items: center;
+		font-size: 12px;
+		padding-right: 20px;
+		grid-column-gap: 6px;
+		line-height: 20px;
+
+		
+		ion-icon{
+			font-size: 18px;
+		}
+	}
+	
+
+
+
+}

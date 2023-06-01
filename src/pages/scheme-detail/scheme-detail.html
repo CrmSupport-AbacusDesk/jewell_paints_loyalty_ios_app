@@ -1,0 +1,32 @@
+<ion-header no-lines>
+  <ion-navbar>
+    <ion-title>{{'Product Bonus Details' | translate}}</ion-title>
+    
+  </ion-navbar>
+  <ion-toolbar color="white">
+    <h2>{{scheme_detail.title}} </h2>
+    <p>Vaild Up To {{scheme_detail.start_date | date:'d MMMM y'}} - {{scheme_detail.end_date | date:'d MMMM y'}}</p>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  
+  
+ 
+  
+  <div class="item-table size-table">
+    <table>
+      <tr>
+        <th>Product Name</th>
+        <th class="w60 text-right">Points</th>
+      </tr>
+      <ng-container *ngFor="let row of product_point" >
+        <tr *ngIf=" row.dealer_point > 0 || row.painter_point > 0 || row.contractor_point > 0">
+          <td>{{row.product_name}}</td>
+          <td class="text-right" *ngIf="userType == '2'"><strong>{{row.dealer_point}}</strong></td>
+          <td class="text-right" *ngIf="userType == '1'"><strong>{{row.contractor_point}}</strong></td>
+        </tr>
+      </ng-container>
+    </table>
+  </div>
+</ion-content>

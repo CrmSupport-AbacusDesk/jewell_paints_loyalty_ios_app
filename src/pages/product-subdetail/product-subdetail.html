@@ -1,0 +1,63 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{prod_detail.catalogue_name}}</ion-title>
+        <!-- <h1>{{prod_detail.product_name | titlecase}}</h1> -->
+        <!-- <p *ngIf="prod_detail.desc!=''"><strong>{{'Description' | translate}}</strong> : {{prod_detail.desc}}</p> -->
+        
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    
+    <div class="slide-image h200">
+        <!-- zoom="true" -->
+        <ion-slides class="cs-slide" *ngIf="prod_detail.image && prod_detail.image.length>1" [initialSlide]="0" pager autoplay="1000" speed="1000" loop="true">
+            <ion-slide *ngFor="let row of prod_detail.image; let i=index" (click)="viewDetail(row.image_name)">
+                <div class="swiper-zoom-container">
+                    <img [src]="upload_url+row.image_name">
+                </div>
+            </ion-slide>
+        </ion-slides>
+        <div class="swiper-zoom-container" *ngIf="prod_detail.image && prod_detail.image.length==1">
+            <img [src]="upload_url+prod_detail_image[0].image_name" (click)="viewDetail(prod_detail_image[0].image_name)">
+        </div>
+        <div class="swiper-zoom-container" *ngIf="prod_detail.image == '' ">
+            <img src="assets/imgs/default-image.png" class="h80">
+        </div>
+    </div>
+    
+
+    <h2>{{prod_detail.catalogue_name}}</h2>
+
+    <div class="item-table size-table">
+        <table>
+            <tr>
+                <th>Code</th>
+                <th class="w60 text-center">Size (Ltr)</th>
+                <th class="w90 text-right">Price</th>
+            </tr>
+            <tr *ngFor="let row of prod_data">
+                <td>{{row.product_code}}</td>
+                <td class="text-center">{{row.size}}</td>
+                <td class="text-right">&#x20B9; {{row.mrp}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <h6 *ngIf="prod_detail.coverage != ''">
+        <span>Coverage</span>{{prod_detail.coverage}}
+    </h6>
+    <h6 *ngIf="prod_detail.primary_features != ''">
+        <span>Primary Features</span>{{prod_detail.primary_features}}
+    </h6>
+    <h6 *ngIf="prod_detail.secondary_featurse != ''">
+        <span>Secondary Featurse</span>{{prod_detail.secondary_featurse}}
+    </h6>
+    <h6 *ngIf="prod_detail.desc != ''">
+        <span>Description</span>{{prod_detail.desc}}
+    </h6>
+    
+
+    
+    
+</ion-content>
